@@ -16,24 +16,36 @@ public class MHS_Test {
     return testBank.addAccount("Nordea", "1234588730", 5300.30);
   }
 
+  public static boolean test_MainPurchaseTicket() {
+    return testMain.purchaseTicket("1234588730", 22.50).equals("Nordea");
+  }
+
   public static boolean test_BankCantAddAccountTwice() {
-    return !testBank.addAccount("Nordea", "1234567890", 5000.30);
+    return !testBank.addAccount("Nordea", "1234588730", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountNordea() {
-    return !testBank.addAccount("Nordea", "134545678", 5000.30);
+    return !testBank.addAccount("Nordea", "1354545645", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountHandelsbanken() {
-    return !testBank.addAccount("Handelsbanken", "344534567890", 5000.30);
+    return !testBank.addAccount("Handelsbanken", "3445345678", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountSEB() {
-    return !testBank.addAccount("SEB", "14534567890", 5000.30);
+    return !testBank.addAccount("SEB", "1453456789", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountSwedbank() {
-    return !testBank.addAccount("Swedbank", "145341567890", 5000.30);
+    return !testBank.addAccount("Swedbank", "1453415678", 5000.30);
+  }
+
+  public static boolean test_BankAddBadAccountTooLong() {
+    return !testBank.addAccount("SEB", "553145678905544", 5000.30);
+  }
+
+  public static boolean test_BankAddBadAccountTooShort() {
+    return !testBank.addAccount("SEB", "5531456", 5000.30);
   }
 
   public static boolean test_BankAccountExist() {
@@ -59,8 +71,8 @@ public class MHS_Test {
     System.out.println("Test Results: ");
     printTestResultText("test_BankAddAccount: ",
                         test_BankAddAccount());
-//    printTestResultText("test_BankAddAccount: ",
-  //                      test_BankAddAccount());
+    printTestResultText("test_MainPurchaseTicket: ",
+                        test_MainPurchaseTicket());
     setupAddAccountsForTesting();
     printTestResultText("test_BankCantAddAccountTwice: ",
                         test_BankCantAddAccountTwice());
@@ -74,5 +86,9 @@ public class MHS_Test {
                         test_BankAddBadAccountSwedbank());
     printTestResultText("test_BankAccountExist: ",
                         test_BankAccountExist());
+    printTestResultText("test_BankAddBadAccountTooLong: ",
+                        test_BankAddBadAccountTooLong());
+    printTestResultText("test_BankAddBadAccountTooShort: ",
+                        test_BankAddBadAccountTooShort());
   }
 }
