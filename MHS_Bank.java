@@ -18,6 +18,9 @@ public class MHS_Bank {
 
   public boolean accountGoodFormat(String bankName, String accountNumber) {
     boolean good = false;
+    if(!(accountNumber.length() == 10)) {
+      return false;
+    }
     switch(bankName){
       case "Nordea":
         if(accountNumber.substring(0, 4).contains("1234")) {
@@ -49,8 +52,8 @@ public class MHS_Bank {
 
   public boolean accountExists(String accountNumber) {
     boolean found = false;
-    for(int i=0; i < bankList.size(); i++) {
-      if(bankList.get(i).getAccountNumber().equals(accountNumber)) {
+    for(int i = 0; i < bankList.size(); i++) {
+      if(bankList.get(i).getAccountNumber().contains(accountNumber)) {
         found = true;
       }
     }
@@ -58,7 +61,7 @@ public class MHS_Bank {
   }
   public String makePurchase(String accountNumber, double ticketPrice) {
     String result = "";
-    for(int i=0; i < bankList.size(); i++) {
+    for(int i = 0; i < bankList.size(); i++) {
       if(bankList.get(i).getAccountNumber().equals(accountNumber)) {
         if(bankList.get(i).purchase(ticketPrice)) {
           result = bankList.get(i).getBankName();
