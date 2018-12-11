@@ -54,7 +54,8 @@ public class MHS_Test {
 
 
 
-  private static void printTestResultText(String testName, boolean resultOfTest){
+  private static void printTestResultText(String testName, boolean resultOfTest
+  ){
     String shuffle = "";
     for(int i = 0; i < (40 - testName.length()); i++){
       shuffle = shuffle + " ";

@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 
 public class MHS_Bank {
-  public static ArrayList<MHS_BankAccount> bankList = new ArrayList<MHS_BankAccount>();
+  public static ArrayList<MHS_BankAccount> bankList
+  = new ArrayList<MHS_BankAccount>();
 
   public boolean addAccount(String bankName, String accountNr, double balance){
     if(accountGoodFormat(bankName, accountNr) && !accountExists(accountNr)) {
