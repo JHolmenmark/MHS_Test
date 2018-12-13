@@ -1,55 +1,80 @@
 public class MHS_Test {
-  public static MHS_Bank testBank = new MHS_Bank();
   public static MHS_Main testMain = new MHS_Main();
+  public static int testsfailedcount = 0;
   public static final String ANSI_GREEN  = "\u001B[32m";
   public static final String ANSI_RED  = "\u001B[31m";
   public static final String ANSI_RESET = "\u001B[0m";
 
-  public static void setupAddAccountsForTesting() {
-    testBank.addAccount("Nordea", "1234567890", 5000.30);
-    testBank.addAccount("Handelsbanken", "1423567890", 200.25);
-    testBank.addAccount("SEB", "5531567890", -50.12);
-    testBank.addAccount("Swedbank", "9951612349", 4200.48);
+  public static void setupAccountsForTesting() {
+    testMain.allBanks.addAccount("Nordea", "1234567890", 5000.30);
+    testMain.allBanks.addAccount("SEB", "5531567890", 150.12);
+    testMain.allBanks.addAccount("Handelsbanken", "1423567890", 200.25);
+
+    testMain.allBanks.addAccount("Swedbank", "9951612349", 4200.48);
+  }
+
+  public static boolean test_MainPurchaseTicketNordea() {
+    System.out.println(testMain.purchaseTicket("1234567890", 22.50));
+    System.out.println(testMain.purchaseTicket("1423567890", 22.50));
+    System.out.println(testMain.purchaseTicket("5531567890", 22.50));
+    System.out.println(testMain.purchaseTicket("9951612349", 22.50));
+    return testMain.purchaseTicket("1234567890", 22.50).equals("Nordea");
+  }
+
+  public static boolean test_MainPurchaseTicketHandelsBanken() {
+    return testMain.purchaseTicket("1423567890", 22.50).equals("Handelsbanken");
+  }
+
+  public static boolean test_MainPurchaseTicketSEB() {
+    return testMain.purchaseTicket("5531567890", 22.50).equals("SEB");
+  }
+
+  public static boolean test_MainPurchaseTicketSwedbank() {
+    return testMain.purchaseTicket("9951612349", 22.50).equals("Swedbank");
+  }
+
+  public static boolean test_MainPurchaseTicketInsufficientFunds() {
+    return testMain.purchaseTicket("1423567890", 220.50).equals("Insufficient Funds");
+  }
+
+  public static boolean test_MainPurchaseTicketWrongAccountNr() {
+    return testMain.purchaseTicket("1435690", 22.50).equals("Wrong AccountNr");
   }
 
   public static boolean test_BankAddAccount() {
-    return testBank.addAccount("Nordea", "1234588730", 5300.30);
-  }
-
-  public static boolean test_MainPurchaseTicket() {
-    return testMain.purchaseTicket("1234588730", 22.50).equals("Nordea");
+    return testMain.allBanks.addAccount("Nordea", "1234588730", 300.30);
   }
 
   public static boolean test_BankCantAddAccountTwice() {
-    return !testBank.addAccount("Nordea", "1234588730", 5000.30);
+    return !testMain.allBanks.addAccount("Nordea", "1234588730", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountNordea() {
-    return !testBank.addAccount("Nordea", "1354545645", 5000.30);
+    return !testMain.allBanks.addAccount("Nordea", "1354545645", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountHandelsbanken() {
-    return !testBank.addAccount("Handelsbanken", "3445345678", 5000.30);
+    return !testMain.allBanks.addAccount("Handelsbanken", "3445345678", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountSEB() {
-    return !testBank.addAccount("SEB", "1453456789", 5000.30);
+    return !testMain.allBanks.addAccount("SEB", "1453456789", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountSwedbank() {
-    return !testBank.addAccount("Swedbank", "1453415678", 5000.30);
+    return !testMain.allBanks.addAccount("Swedbank", "1453415678", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountTooLong() {
-    return !testBank.addAccount("SEB", "553145678905544", 5000.30);
+    return !testMain.allBanks.addAccount("SEB", "553145678905544", 5000.30);
   }
 
   public static boolean test_BankAddBadAccountTooShort() {
-    return !testBank.addAccount("SEB", "5531456", 5000.30);
+    return !testMain.allBanks.addAccount("SEB", "5531456", 5000.30);
   }
 
   public static boolean test_BankAccountExist() {
-    return testBank.accountExists("1234567890");
+    return testMain.allBanks.accountExists("1234567890");
   }
 
 
@@ -69,12 +94,26 @@ public class MHS_Test {
   }
 
   public static void main(String[] args){
-    System.out.println("Test Results: ");
+    setupAccountsForTesting();
+    System.out.println("Test Results for MHS_Main: ");
+    printTestResultText("test_BankAccountExist: ",
+                        test_BankAccountExist());
+    printTestResultText("test_MainPurchaseTicketNordea: ",
+                        test_MainPurchaseTicketNordea());
+    printTestResultText("test_MainPurchaseTicketHandelsBanken: ",
+                        test_MainPurchaseTicketHandelsBanken());
+    printTestResultText("test_MainPurchaseTicketSEB: ",
+                        test_MainPurchaseTicketSEB());
+    printTestResultText("test_MainPurchaseTicketSwedbank: ",
+                        test_MainPurchaseTicketSwedbank());
+    printTestResultText("test_MainPurchaseTicketInsufficientFunds: ",
+                        test_MainPurchaseTicketInsufficientFunds());
+    printTestResultText("test_MainPurchaseTicketWrongAccountNr: ",
+                        test_MainPurchaseTicketWrongAccountNr());
+
+    System.out.println("Tests failed so far: " + testsfailedcount);
     printTestResultText("test_BankAddAccount: ",
                         test_BankAddAccount());
-    printTestResultText("test_MainPurchaseTicket: ",
-                        test_MainPurchaseTicket());
-    setupAddAccountsForTesting();
     printTestResultText("test_BankCantAddAccountTwice: ",
                         test_BankCantAddAccountTwice());
     printTestResultText("test_BankAddBadAccountNordea: ",

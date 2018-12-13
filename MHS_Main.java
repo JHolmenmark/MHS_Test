@@ -5,5 +5,4 @@ public class MHS_Main {
     return allBanks.makePurchase(accountNr, ticketPrice);
   }
 
-
 }
