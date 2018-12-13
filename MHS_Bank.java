@@ -39,7 +39,8 @@ public class MHS_Bank {
         }
         break;
       case "Swedbank":
-        if(accountNumber.substring(0, 5).contains("99156") && accountNumber.substring(9).contains("9")) {
+        if(accountNumber.substring(0, 5).contains("99156")
+        && accountNumber.substring(9).contains("9")) {
           good = true;
         }
         break;
