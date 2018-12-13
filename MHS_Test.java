@@ -8,16 +8,11 @@ public class MHS_Test {
   public static void setupAccountsForTesting() {
     testMain.allBanks.addAccount("Nordea", "1234567890", 5000.30);
     testMain.allBanks.addAccount("SEB", "5531567890", 150.12);
+    testMain.allBanks.addAccount("Swedbank", "9915612349", 4200.48);
     testMain.allBanks.addAccount("Handelsbanken", "1423567890", 200.25);
-
-    testMain.allBanks.addAccount("Swedbank", "9951612349", 4200.48);
   }
 
   public static boolean test_MainPurchaseTicketNordea() {
-    System.out.println(testMain.purchaseTicket("1234567890", 22.50));
-    System.out.println(testMain.purchaseTicket("1423567890", 22.50));
-    System.out.println(testMain.purchaseTicket("5531567890", 22.50));
-    System.out.println(testMain.purchaseTicket("9951612349", 22.50));
     return testMain.purchaseTicket("1234567890", 22.50).equals("Nordea");
   }
 
@@ -30,7 +25,7 @@ public class MHS_Test {
   }
 
   public static boolean test_MainPurchaseTicketSwedbank() {
-    return testMain.purchaseTicket("9951612349", 22.50).equals("Swedbank");
+    return testMain.purchaseTicket("9915612349", 22.50).equals("Swedbank");
   }
 
   public static boolean test_MainPurchaseTicketInsufficientFunds() {
@@ -90,6 +85,7 @@ public class MHS_Test {
       System.out.println(ANSI_GREEN + "PASSED" + ANSI_RESET);
     } else {
       System.out.println(ANSI_RED + "FAILED" + ANSI_RESET);
+      testsfailedcount += 1;
     }
   }
 
@@ -110,8 +106,8 @@ public class MHS_Test {
                         test_MainPurchaseTicketInsufficientFunds());
     printTestResultText("test_MainPurchaseTicketWrongAccountNr: ",
                         test_MainPurchaseTicketWrongAccountNr());
-
-    System.out.println("Tests failed so far: " + testsfailedcount);
+    System.out.println("Total nr of tests failed so far: " + testsfailedcount);
+    System.out.println("Test Results for MHS_Bank: ");
     printTestResultText("test_BankAddAccount: ",
                         test_BankAddAccount());
     printTestResultText("test_BankCantAddAccountTwice: ",
@@ -130,5 +126,7 @@ public class MHS_Test {
                         test_BankAddBadAccountTooLong());
     printTestResultText("test_BankAddBadAccountTooShort: ",
                         test_BankAddBadAccountTooShort());
+    System.out.println("Total nr of tests failed so far: " + testsfailedcount);
+
   }
 }

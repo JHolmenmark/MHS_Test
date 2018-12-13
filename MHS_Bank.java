@@ -39,8 +39,7 @@ public class MHS_Bank {
         }
         break;
       case "Swedbank":
-        if(accountNumber.substring(0, 5).contains("99156")
-        && accountNumber.substring(10).contains("9")) {
+        if(accountNumber.substring(0, 5).contains("99156") && accountNumber.substring(9).contains("9")) {
           good = true;
         }
         break;
@@ -63,11 +62,13 @@ public class MHS_Bank {
   public String makePurchase(String accountNumber, double ticketPrice) {
     String result = "";
     for(int i = 0; i < bankList.size(); i++) {
-      if(bankList.get(i).getAccountNumber().equals(accountNumber)) {
+      if(bankList.get(i).getAccountNumber().contains(accountNumber)) {
         if(bankList.get(i).purchase(ticketPrice)) {
           result = bankList.get(i).getBankName();
+          break;
         } else {
           result = "Insufficient Funds";
+          break;
         }
       } else {
         result = "Wrong AccountNr";
