@@ -36,8 +36,9 @@ public class MHS_Test {
     return testMain.purchaseTicket("1435690", 22.50).equals("Wrong AccountNr");
   }
 
+
   public static boolean test_BankAddAccount() {
-    return testMain.allBanks.addAccount("Nordea", "1234588730", 300.30);
+    return testMain.allBanks.addAccount("Nordea", "1234588730", -300.30);
   }
 
   public static boolean test_BankCantAddAccountTwice() {
@@ -72,12 +73,37 @@ public class MHS_Test {
     return testMain.allBanks.accountExists("1234567890");
   }
 
+  public static boolean test_BankPurchaseTicketNordea() {
+    return testMain.allBanks.makePurchase("1234567890", 22.50).equals("Nordea");
+  }
+
+  public static boolean test_BankPurchaseTicketHandelsBanken() {
+    return testMain.allBanks.makePurchase("1423567890",
+                                           22.50).equals("Handelsbanken");
+  }
+
+  public static boolean test_BankPurchaseTicketSEB() {
+    return testMain.allBanks.makePurchase("5531567890", 22.50).equals("SEB");
+  }
+
+  public static boolean test_BankPurchaseTicketSwedbank() {
+    return testMain.allBanks.makePurchase("9915612349", 22.50).equals("Swedbank");
+  }
+
+  public static boolean test_BankPurchaseTicketInsufficientFunds() {
+    return testMain.allBanks.makePurchase("1423567890",
+                                           220.50).equals("Insufficient Funds");
+  }
+
+  public static boolean test_BankPurchaseTicketWrongAccountNr() {
+    return testMain.allBanks.makePurchase("1435690", 22.50).equals("Wrong AccountNr");
+  }
 
 
   private static void printTestResultText(String testName, boolean resultOfTest
   ){
     String shuffle = "";
-    for(int i = 0; i < (40 - testName.length()); i++){
+    for(int i = 0; i < (45 - testName.length()); i++){
       shuffle = shuffle + " ";
     }
     System.out.print(testName + shuffle);
@@ -126,6 +152,21 @@ public class MHS_Test {
                         test_BankAddBadAccountTooLong());
     printTestResultText("test_BankAddBadAccountTooShort: ",
                         test_BankAddBadAccountTooShort());
+    printTestResultText("test_BankAccountExist: ",
+                        test_BankAccountExist());
+    printTestResultText("test_BankPurchaseTicketNordea: ",
+                        test_BankPurchaseTicketNordea());
+    printTestResultText("test_BankPurchaseTicketHandelsBanken: ",
+                        test_BankPurchaseTicketHandelsBanken());
+    printTestResultText("test_BankPurchaseTicketSEB: ",
+                        test_BankPurchaseTicketSEB());
+    printTestResultText("test_BankPurchaseTicketSwedbank: ",
+                        test_BankPurchaseTicketSwedbank());
+    printTestResultText("test_BankPurchaseTicketInsufficientFunds: ",
+                        test_BankPurchaseTicketInsufficientFunds());
+    printTestResultText("test_BankPurchaseTicketWrongAccountNr: ",
+                        test_BankPurchaseTicketWrongAccountNr());
+
     System.out.println("Total nr of tests failed so far: " + testsfailedcount);
 
   }

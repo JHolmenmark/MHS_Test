@@ -78,7 +78,4 @@ public class MHS_Bank {
     return result;
   }
 
-  public ArrayList<MHS_BankAccount> getBankList(){
-    return bankList;
-  }
 }
