@@ -1,7 +1,7 @@
 public class MHS_BankAccount {
-    private String bankName;
-    private String accountNr;
-    private double balance;
+    private String bankName = "";
+    private String accountNr = "";
+    private double balance = 0.0;
 
     public void setBankName(String name) {
       bankName = name;

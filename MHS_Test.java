@@ -1,5 +1,6 @@
 public class MHS_Test {
   public static MHS_Main testMain = new MHS_Main();
+  public static MHS_BankAccount dummyAccount = new MHS_BankAccount();
   public static int testsfailedcount = 0;
   public static final String ANSI_GREEN  = "\u001B[32m";
   public static final String ANSI_RED  = "\u001B[31m";
@@ -100,10 +101,39 @@ public class MHS_Test {
   }
 
 
+  public static boolean test_BankAccountStartValueOfBankName() {
+    return dummyAccount.getBankName().equals("");
+  }
+  public static boolean test_BankAccountStartValueOfAccountNumber() {
+    return dummyAccount.getAccountNumber().equals("");
+  }
+  public static boolean test_BankAccountStartValueOfBalance() {
+    return dummyAccount.getBalance() == 0.0;
+  }
+
+  public static boolean test_BankAccountSetBankName() {
+    dummyAccount.setBankName("Nordea");
+    return dummyAccount.getBankName().equals("Nordea");
+  }
+  public static boolean test_BankAccountSetAccountNumber() {
+    dummyAccount.setAccountNumber("1234098765");
+    return dummyAccount.getAccountNumber().equals("1234098765");
+  }
+  public static boolean test_BankAccountSetBalance() {
+    dummyAccount.setBalance(42.24);
+    return dummyAccount.getBalance() == 42.24;
+  }
+  public static boolean test_BankAccountPurchase() {
+    return dummyAccount.purchase(42.24);
+  }
+  public static boolean test_BankAccountPurchaseWithInsufficientFunds() {
+    return !dummyAccount.purchase(42.24);
+  }
+
   private static void printTestResultText(String testName, boolean resultOfTest
   ){
     String shuffle = "";
-    for(int i = 0; i < (45 - testName.length()); i++){
+    for(int i = 0; i < (50 - testName.length()); i++){
       shuffle = shuffle + " ";
     }
     System.out.print(testName + shuffle);
@@ -166,8 +196,25 @@ public class MHS_Test {
                         test_BankPurchaseTicketInsufficientFunds());
     printTestResultText("test_BankPurchaseTicketWrongAccountNr: ",
                         test_BankPurchaseTicketWrongAccountNr());
+    System.out.println("Total nr of tests failed so far: " + testsfailedcount);
+    System.out.println("Test Results for MHS_BankAccount: ");
+    printTestResultText("test_BankAccountStartValueOfBankName: ",
+                        test_BankAccountStartValueOfBankName());
+    printTestResultText("test_BankAccountStartValueOfAccountNumber: ",
+                        test_BankAccountStartValueOfAccountNumber());
+    printTestResultText("test_BankAccountStartValueOfBalance: ",
+                        test_BankAccountStartValueOfBalance());
+    printTestResultText("test_BankAccountSetBankName: ",
+                        test_BankAccountSetBankName());
+    printTestResultText("test_BankAccountSetAccountNumber: ",
+                        test_BankAccountSetAccountNumber());
+    printTestResultText("test_BankAccountSetBalance: ",
+                        test_BankAccountSetBalance());
+    printTestResultText("test_BankAccountPurchase: ",
+                        test_BankAccountPurchase());
+    printTestResultText("test_BankAccountPurchaseWithInsufficientFunds: ",
+                        test_BankAccountPurchaseWithInsufficientFunds());
 
     System.out.println("Total nr of tests failed so far: " + testsfailedcount);
-
   }
 }
