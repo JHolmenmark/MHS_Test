@@ -5,13 +5,13 @@ public class MHS_Test {
     
     private static MHS_Bank bankInfo = new MHS_Bank();
     private static MHS_BankAccount bankAccount = new MHS_BankAccount();
-    private static final String ACCOUNT_NR = "1234111222";
-    private static final double BALANCE = 15.56;
-    private static final String BANK_NAME = "Nordea";
-    private static final double PRICE = 10.89;
-    private static final int substringStartPosition = 0;
-    private static final int susbstringEndPosition1 = 4;
-    private static final int susbstringEndPosition2 = 5;
+    private static String ACCOUNT_NR = "9951612229";
+    private static double BALANCE = 15.56;
+    private static String BANK_NAME = "Nordea";
+    private static double PRICE = 18.89;
+    private static int substringStartPosition = 0;
+    private static int susbstringEndPosition1 = 4;
+    private static int susbstringEndPosition2 = 5;
     
     public static final String ANSI_RED    = "\u001B[31m";
     public static final String ANSI_GREEN  = "\u001B[32m";
@@ -31,9 +31,15 @@ public class MHS_Test {
         return (BALANCE
                 ==bankAccount.getBalance(Double.parseDouble(ACCOUNT_NR)));
     }
-    public static boolean test_getSetBalance(){
-        bankAccount.setBalance(PRICE);
+    public static boolean test_SetBalance(String accNr, double price){
+        ACCOUNT_NR = accNr;
+        PRICE = price;
+        bankAccount.getBalance(Double.parseDouble(accNr));
+        bankAccount.setBalance(price);
+        if (bankAccount.bankInfo[0][1]==(BALANCE - PRICE)){
         return true;
+        }
+        return false;
     }
     private static void printResultMethod(){
       int totalAmountOfErros = 0;
@@ -45,7 +51,7 @@ public class MHS_Test {
                                 test_substringAccountNr(ACCOUNT_NR), 
                                 test_getBankName(substringStartPosition, 
                                         susbstringEndPosition1),
-                                test_getBalance(), test_getSetBalance()};
+                                test_getBalance(), test_SetBalance(ACCOUNT_NR, PRICE)};
       for (int i = 0; i < resultArray.length; i++){
           if(resultArray[i] == true){
       System.out.printf("%-30s"+ANSI_GREEN+"%s%n"+ANSI_RESET,
@@ -63,6 +69,8 @@ public class MHS_Test {
     public static void main(String[]args){
         
         MHS_Test tests = new MHS_Test();
+        
         tests.printResultMethod();
+        
     }
 }
